@@ -44,7 +44,6 @@ const mutations = {
         state.table_size = []
 
         for (var elt in payload) {
-            console.log(payload[elt])
             state.table_infos_dict[payload[elt].table_name] = {
                 "num_rows": payload[elt].num_rows,
                 "table_size": payload[elt].table_size

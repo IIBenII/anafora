@@ -1,12 +1,5 @@
 <template>
-    <!-- <v-card color="grey lighten-4" flat height="200px" tile> -->
     <nav>
-        <!-- <v-app-bar color="primary" dark>
-            <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
-
-            <v-toolbar-title>Anafora</v-toolbar-title>
-        </v-app-bar>-->
-
         <v-navigation-drawer permanent app>
             <v-list-item>
                 <v-list-item-content>

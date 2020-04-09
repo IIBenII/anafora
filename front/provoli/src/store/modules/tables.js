@@ -11,7 +11,7 @@ const getters = {}
 
 // actions
 const actions = {
-    async getRecipes({ state, commit }, [project_name, dataset_name, compact]) {
+    async getTables({ state, commit }, [project_name, dataset_name, compact]) {
 
         try {
             let response = await axios.get(`${state.apiUrl}`, {
@@ -24,16 +24,16 @@ const actions = {
                     'Access-Control-Allow-Origin': '*',
                 }
             });
-            commit("setRecipes", response.data.tables);
+            commit("setTables", response.data.tables);
         } catch (error) {
-            commit("setRecipes", []);
+            commit("setTables", []);
         }
     }
 }
 
 // mutations
 const mutations = {
-    setRecipes(state, payload) {
+    setTables(state, payload) {
         state.tables = payload;
     }
 }

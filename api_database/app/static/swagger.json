@@ -1,0 +1,152 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "description": "API to interact with Anafora database",
+        "version": "1.0.0",
+        "title": "Vivlio",
+        "contact": {
+            "email": "benjamin.berriot@gmail.com"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "components": {
+        "schemas": {
+            "dataset": {
+                "type": "object",
+                "properties": {
+                    "project_name": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "dataset_name": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "%Y-%m-%d %H:%M:%S"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "%Y-%m-%d %H:%M:%S"
+                    },
+                    "description": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "default_table_expiration_ms": {
+                        "type": "integer",
+                        "format": "integer"
+                    },
+                    "default_partition_expiration_ms": {
+                        "type": "integer",
+                        "format": "integer"
+                    },
+                    "default_encryption_configuration": {
+                        "type": "string",
+                        "format": "string"
+                    }
+                },
+                "required": [
+                    "project_name",
+                    "dataset_name"
+                ]
+            },
+            "table": {
+                "type": "object",
+                "properties": {
+                    "project_name": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "dataset_name": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "table_name": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "%Y-%m-%d %H:%M:%S"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "%Y-%m-%d %H:%M:%S"
+                    },
+                    "description": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "num_bytes": {
+                        "type": "integer",
+                        "format": "integer"
+                    },
+                    "num_rows": {
+                        "type": "integer",
+                        "format": "integer"
+                    }
+                },
+                "required": [
+                    "project_name",
+                    "dataset_name",
+                    "table_name"
+                ]
+            }
+        }
+    },
+    "paths": {
+        "/datasets": {
+            "post": {
+                "summary": "Add datasets informations",
+                "requestBody": {
+                    "description": "Datasets informations",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/dataset"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Failed. Bad post data."
+                    }
+                }
+            }
+        },
+        "/tables": {
+            "post": {
+                "summary": "Add tables informations",
+                "requestBody": {
+                    "description": "Tables informations",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/table"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Failed. Bad post data."
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,38 +1,22 @@
 <template>
     <v-container grid-list-lg>
         <v-layout row wrap max-height="100%">
-            <v-flex xs12 sm6 md6 lg4 v-for="(item, idx) in recipes" :key="idx">
+            <v-flex xs12 sm6 md6 lg4 v-for="(item, idx) in datasets" :key="idx">
                 <v-card>
-                    <v-responsive>
-                        <!-- <v-img :src="item.datas.image"></v-img> -->
-                    </v-responsive>
-
                     <v-card-text>
                         <div class="title">{{item.dataset_name}}</div>
 
                         <div class="subheading">Description: {{item.description}}</div>
                         <div class="subheading">Number of tables: {{item.nb_table}}</div>
                         <div class="subheading">Project: {{item.project_name}}</div>
-                        <!-- <ul>
-                            <li
-                                v-for="(ingredient, i) in item.recipe.ingredientLines"
-                                :key="i"
-                            >{{ingredient}}</li>
-                        </ul>-->
                     </v-card-text>
                     <!-- <v-card-actions v-if="['menu'].includes($route.name)"> -->
                     <v-card-actions>
-                        <!-- <v-btn color="primary" dark @click.stop="dialog = true">Open Dialog</v-btn> -->
                         <v-btn
                             color="primary"
                             dark
                             @click.stop="open_dialog(item.project_name,item.dataset_name)"
                         >More</v-btn>
-                        <!-- <v-btn
-                            block
-                            color="light-green"
-                            @click="showRecipes('paleo')"
-                        >More informations</v-btn>-->
                     </v-card-actions>
                 </v-card>
             </v-flex>
@@ -66,7 +50,6 @@
                         </v-col>
                     </v-row>
                     <v-row no-gutters>
-                        <!-- <v-divider></v-divider> -->
                         <v-col md="4">
                             <v-list class="overflow-y-auto" max-height="80vh" dense>
                                 <v-container v-for="(item, idx) in tables" :key="idx">
@@ -99,8 +82,6 @@
                                 </v-container>
                             </v-list>
                         </v-col>
-
-                        <!-- <v-divider vertical></v-divider> -->
 
                         <v-col md="8">
                             <v-card
@@ -183,16 +164,16 @@
 import { Plotly } from "vue-plotly";
 
 export default {
-    name: "MealRecipes",
+    name: "GlobalViews",
     components: {
         Plotly
     },
 
     created() {
-        this.$store.dispatch("datasets/getRecipes");
+        this.$store.dispatch("datasets/getDatasets");
     },
     computed: {
-        recipes() {
+        datasets() {
             return this.$store.state.datasets.datasets;
         },
         tables() {
@@ -230,13 +211,13 @@ export default {
             this.dialog = false;
         },
         open_dialog(project_name, dataset_name) {
-            this.$store.dispatch("tables/getRecipes", [
+            this.$store.dispatch("tables/getTables", [
                 project_name,
                 dataset_name,
                 "true"
             ]);
             this.unsubscribe = this.$store.subscribe(mutation => {
-                if (mutation.type === "tables/setRecipes") {
+                if (mutation.type === "tables/setTables") {
                     this.dialog = true;
                     this.dialog2 = false;
                     this.dataset_name = dataset_name;
@@ -267,7 +248,6 @@ export default {
             this.dialog2 = true;
         },
         update_table_vue(table) {
-            console.log(table);
             this.num_rows = this.$store.state.table_infos.table_infos_dict[
                 table
             ].num_rows;
@@ -275,7 +255,6 @@ export default {
             this.table_size = this.$store.state.table_infos.table_infos_dict[
                 table
             ].table_size;
-            console.log(this.table_size);
         }
     },
     data() {

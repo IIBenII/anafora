@@ -1,21 +1,14 @@
 <template>
-    <!-- <span> -->
-    <HomePlans ref="TableInfos"></HomePlans>
-    <!-- <TableInfos></TableInfos> -->
-    <!-- </span> -->
+    <Home></Home>
 </template>
 
 <script>
-// import HomeHero from '@/components/HomeHero';
-import HomePlans from "@/components/HomePlans";
-// import TableInfos from "@/components/TableInfos";
+import Home from "@/components/Home";
 
 export default {
     name: "home",
     components: {
-        // HomeHero,
-        HomePlans
-        // TableInfos
+        Home
     }
 };
 </script>

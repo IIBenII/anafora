@@ -14,6 +14,7 @@ def create_app():
     """Construct the core application."""
     app = Flask(__name__, instance_relative_config=False)
     app.config.from_object("config.Config")
+    app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
     db.init_app(app)
     ma.init_app(app)
     CORS(app)

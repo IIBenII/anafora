@@ -14,7 +14,7 @@
     },
     "components": {
         "schemas": {
-            "dataset": {
+            "Dataset": {
                 "type": "object",
                 "properties": {
                     "project_name": {
@@ -55,7 +55,28 @@
                     "dataset_name"
                 ]
             },
-            "table": {
+            "DatasetResponse": {
+                "type": "object",
+                "properties": {
+                    "project_name": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "dataset_name": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "description": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "nb_table": {
+                        "type": "integer",
+                        "format": "integer"
+                    }
+                }
+            },
+            "Table": {
                 "type": "object",
                 "properties": {
                     "project_name": {
@@ -96,6 +117,56 @@
                     "dataset_name",
                     "table_name"
                 ]
+            },
+            "TableResponse": {
+                "type": "object",
+                "properties": {
+                    "project_name": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "dataset_name": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "table_name": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "description": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "nb_table": {
+                        "type": "integer",
+                        "format": "integer"
+                    }
+                }
+            },
+            "TableInfosResponse": {
+                "type": "object",
+                "properties": {
+                    "table_name": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "clean_table_name": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "description": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "num_rows": {
+                        "type": "integer",
+                        "format": "integer"
+                    },
+                    "table_size": {
+                        "type": "integer",
+                        "format": "integer"
+                    }
+                }
             }
         }
     },
@@ -109,14 +180,40 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/dataset"
+                                "$ref": "#/components/schemas/Dataset"
                             }
                         }
                     }
                 },
                 "responses": {
-                    "201": {
+                    "200": {
                         "description": "OK"
+                    },
+                    "400": {
+                        "description": "Failed. Bad post data."
+                    }
+                }
+            },
+            "get": {
+                "summary": "Get all datasets informations",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "datasets": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/DatasetResponse"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Failed. Bad post data."
@@ -133,14 +230,108 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/table"
+                                "$ref": "#/components/schemas/Table"
                             }
                         }
                     }
                 },
                 "responses": {
-                    "201": {
+                    "200": {
                         "description": "OK"
+                    },
+                    "400": {
+                        "description": "Failed. Bad post data."
+                    }
+                }
+            },
+            "get": {
+                "summary": "Get all tables for one dataset",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "project_name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "dataset_name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "conpact",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "tables": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/TableResponse"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed. Bad post data."
+                    }
+                }
+            }
+        },
+        "/table_infos": {
+            "get": {
+                "summary": "Get all information of one table",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "project_name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "dataset_name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "clean_table_name",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "table_infos": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/TableInfosResponse"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Failed. Bad post data."

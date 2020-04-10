@@ -35,7 +35,7 @@ def get_dataset():
                 "nb_table": elt.nb_table,
             }
         )
-    return {"datasets": list_dataset}
+    return {"datasets": list_dataset}, 200
 
 
 @app.route("/datasets", methods=["POST", "GET"])
@@ -190,4 +190,4 @@ def insert_table():
         db.session.add(table)
 
     db.session.commit()
-    return "Done"
+    return "OK"

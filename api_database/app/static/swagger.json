@@ -261,7 +261,7 @@
                     },
                     {
                         "in": "query",
-                        "name": "conpact",
+                        "name": "compact",
                         "required": true,
                         "type": "string"
                     }

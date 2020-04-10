@@ -4,7 +4,16 @@ from marshmallow import ValidationError
 from sqlalchemy import func
 
 
-from .models import db, ma, Datasets, Tables, SchemaDatasets, SchemaTables
+from .models import (
+    db,
+    ma,
+    Datasets,
+    Tables,
+    SchemaDatasets,
+    SchemaTables,
+    SchemaGetTables,
+    SchemaGetTablesInfos,
+)
 
 
 @app.route("/health")
@@ -77,6 +86,12 @@ def get_tables():
     dataset_name = request.args.get("dataset_name", type=str)
     compact = request.args.get("compact", type=str)
 
+    try:
+        validation = SchemaGetTables().load(request.args.to_dict())
+    except ValidationError as err:
+        print(err.messages)
+        return err.messages, 400
+
     dataset = Datasets.query.filter_by(
         project_name=project_name, dataset_name=dataset_name
     ).first()
@@ -127,6 +142,12 @@ def get_table_infos():
     project_name = request.args.get("project_name", type=str)
     dataset_name = request.args.get("dataset_name", type=str)
     clean_table_name = request.args.get("clean_table_name", type=str)
+
+    try:
+        validation = SchemaGetTablesInfos().load(request.args.to_dict())
+    except ValidationError as err:
+        print(err.messages)
+        return err.messages, 400
 
     dataset = Datasets.query.filter_by(
         project_name=project_name, dataset_name=dataset_name

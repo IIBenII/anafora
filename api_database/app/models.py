@@ -54,3 +54,15 @@ class SchemaTables(ma.Schema):
     description = fields.Str(allow_none=True)
     num_bytes = fields.Int(allow_none=True)
     num_rows = fields.Int(allow_none=True)
+
+
+class SchemaGetTables(ma.Schema):
+    project_name = fields.Str(required=True)
+    dataset_name = fields.Str(required=True)
+    compact = fields.Str(required=True)
+
+
+class SchemaGetTablesInfos(ma.Schema):
+    project_name = fields.Str(required=True)
+    dataset_name = fields.Str(required=True)
+    clean_table_name = fields.Str(required=True)

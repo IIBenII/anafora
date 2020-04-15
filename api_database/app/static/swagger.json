@@ -91,6 +91,10 @@
                         "type": "string",
                         "format": "string"
                     },
+                    "clean_table_name": {
+                        "type": "string",
+                        "format": "string"
+                    },
                     "created": {
                         "type": "string",
                         "format": "%Y-%m-%d %H:%M:%S"
@@ -174,6 +178,9 @@
         "/datasets": {
             "post": {
                 "summary": "Add datasets informations",
+                "tags": [
+                    "datasets"
+                ],
                 "requestBody": {
                     "description": "Datasets informations",
                     "required": true,
@@ -196,6 +203,9 @@
             },
             "get": {
                 "summary": "Get all datasets informations",
+                "tags": [
+                    "datasets"
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -224,6 +234,9 @@
         "/tables": {
             "post": {
                 "summary": "Add tables informations",
+                "tags": [
+                    "tables"
+                ],
                 "requestBody": {
                     "description": "Tables informations",
                     "required": true,
@@ -246,6 +259,9 @@
             },
             "get": {
                 "summary": "Get all tables for one dataset",
+                "tags": [
+                    "tables"
+                ],
                 "parameters": [
                     {
                         "in": "query",
@@ -294,6 +310,9 @@
         "/table_infos": {
             "get": {
                 "summary": "Get all information of one table",
+                "tags": [
+                    "tables"
+                ],
                 "parameters": [
                     {
                         "in": "query",

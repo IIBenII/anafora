@@ -1,7 +1,7 @@
 from marshmallow import ValidationError
 from sqlalchemy import func
 
-import app.models as ms
+import vivlio.models as ms
 
 
 def get_table_infos(request):

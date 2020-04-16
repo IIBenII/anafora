@@ -1,6 +1,8 @@
 flask
+uwsgi
 flask_sqlalchemy
 flask_swagger_ui
 flask_marshmallow
 flask-cors
 marshmallow-sqlalchemy
+psycopg2

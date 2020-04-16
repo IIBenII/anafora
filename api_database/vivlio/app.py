@@ -10,28 +10,6 @@ db = SQLAlchemy()
 ma = Marshmallow()
 
 
-def create_app():
-    """Construct the core application."""
-    app = Flask(__name__, instance_relative_config=False)
-    app.config.from_object("config.Config")
-    app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
-    db.init_app(app)
-    ma.init_app(app)
-    CORS(app)
-
-    SWAGGER_URL = "/swagger"
-    API_URL = "/static/swagger.json"
-    SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(SWAGGER_URL, API_URL)
-    app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
-    app.cli.add_command(init_db_command)
-    app.cli.add_command(drop_db_command)
-
-    with app.app_context():
-        from . import views
-
-        return app
-
-
 @click.command("init-db")
 @with_appcontext
 def init_db_command():
@@ -49,3 +27,27 @@ def drop_db_command():
     db.create_all()
 
     click.echo("Initialized the database.")
+
+
+app = Flask(__name__, instance_relative_config=False)
+app.config.from_object("vivlio.config.Config")
+app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
+db.init_app(app)
+ma.init_app(app)
+CORS(app)
+
+SWAGGER_URL = "/swagger"
+API_URL = "/static/swagger.json"
+SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(SWAGGER_URL, API_URL)
+app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
+app.cli.add_command(init_db_command)
+app.cli.add_command(drop_db_command)
+
+with app.app_context():
+    import vivlio.views
+
+    app
+
+
+if __name__ == "__main__":
+    app.run()

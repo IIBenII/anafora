@@ -171,6 +171,50 @@
                         "format": "integer"
                     }
                 }
+            },
+            "Field": {
+                "type": "object",
+                "properties": {
+                    "field_name": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "field_type": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "field_mode": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "field_description": {
+                        "type": "string",
+                        "format": "string"
+                    }
+                }
+            },
+            "Schema": {
+                "type": "object",
+                "properties": {
+                    "project_name": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "dataset_name": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "table_name": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "schema": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Field"
+                        }
+                    }
+                }
             }
         }
     },
@@ -345,6 +389,82 @@
                                             "type": "array",
                                             "items": {
                                                 "$ref": "#/components/schemas/TableInfosResponse"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed. Bad post data."
+                    }
+                }
+            }
+        },
+        "/schema": {
+            "post": {
+                "summary": "Add schema informations",
+                "tags": [
+                    "schema"
+                ],
+                "requestBody": {
+                    "description": "Schema informations",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Schema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Failed. Bad post data."
+                    }
+                }
+            },
+            "get": {
+                "summary": "Get schema of one table",
+                "tags": [
+                    "schema"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "project_name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "dataset_name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "table_name",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "schema": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Field"
                                             }
                                         }
                                     }

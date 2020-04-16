@@ -1,7 +1,8 @@
+from flask import jsonify
 from marshmallow import ValidationError
 from sqlalchemy import func
 
-import app.models as ms
+import vivlio.models as ms
 
 
 def get_dataset():
@@ -13,7 +14,9 @@ def get_dataset():
             func.count(ms.Tables.table_name).label("nb_table"),
         )
         .outerjoin(ms.Tables, ms.Tables.dataset_id == ms.Datasets.id)
-        .group_by(ms.Datasets.dataset_name)
+        .group_by(
+            ms.Datasets.dataset_name, ms.Datasets.description, ms.Datasets.project_name
+        )
         .order_by(ms.Datasets.dataset_name)
         .all()
     )
@@ -27,7 +30,7 @@ def get_dataset():
                 "nb_table": elt.nb_table,
             }
         )
-    return {"datasets": list_dataset}, 200
+    return jsonify({"datasets": list_dataset})
 
 
 def post_dataset(request):

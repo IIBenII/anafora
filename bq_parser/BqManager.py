@@ -34,6 +34,22 @@ def clean_table_name(table_name):
     return "_".join(table_name_split[:-1]) + "_"
 
 
+def build_recursive_schema(schema, parent=None):
+    result = []
+    for elt in schema:
+        if not parent:
+            full_name = elt.name
+        else:
+            full_name = parent + "." + elt.name
+
+        result.append((full_name, elt.field_type, elt.mode, elt.description))
+
+        if elt.field_type == "RECORD":
+            result += build_recursive_schema(elt.fields, full_name)
+
+    return result
+
+
 def get_tables_of_dataset(project_name, dataset_id):
     client = bigquery.Client()
     tables = list(client.list_tables("{}.{}".format(project_name, dataset_id)))
@@ -54,5 +70,27 @@ def get_tables_of_dataset(project_name, dataset_id):
                 "num_rows": table.num_rows,
             },
         )
+        unpack_schema = build_recursive_schema(table.schema)
+
+        values_to_insert = {
+            "project_name": table.project,
+            "dataset_name": table.dataset_id,
+            "table_name": table.table_id,
+            "schema": [],
+        }
+
+        for field in unpack_schema:
+            field_name, field_type, field_mode, field_description = field
+
+            values_to_insert["schema"].append(
+                {
+                    "field_name": field_name,
+                    "field_type": field_type,
+                    "field_mode": field_mode,
+                    "field_description": field_description,
+                }
+            )
+
+        requests.post("http://172.17.0.1:5000/schema", json=values_to_insert)
 
     return tables

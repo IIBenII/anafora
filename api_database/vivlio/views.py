@@ -3,9 +3,10 @@ from flask import current_app as app
 from marshmallow import ValidationError
 from sqlalchemy import func
 
-from app.src import datasets as ds
-from app.src import tables as ts
-from app.src import table_infos as ti
+from vivlio.src import datasets as ds
+from vivlio.src import tables as ts
+from vivlio.src import table_infos as ti
+from vivlio.src import schema as sm
 
 
 @app.route("/health")
@@ -33,3 +34,11 @@ def get_tables():
 def get_table_infos():
     if request.method == "GET":
         return ti.get_table_infos(request)
+
+
+@app.route("/schema", methods=["GET", "POST"])
+def get_schema():
+    if request.method == "GET":
+        return sm.get_schema(request)
+    else:
+        return sm.post_schema(request)

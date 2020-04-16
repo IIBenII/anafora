@@ -1,7 +1,7 @@
 from marshmallow import ValidationError
 from sqlalchemy import func
 
-import app.models as ms
+import vivlio.models as ms
 
 
 def get_tables(request):
@@ -27,8 +27,8 @@ def get_tables(request):
                 func.count(ms.Tables.table_name).label("nb_table"),
             )
             .filter_by(dataset_id=dataset.id)
-            .order_by(ms.Tables.table_name)
-            .group_by(ms.Tables.clean_table_name)
+            .order_by(ms.Tables.clean_table_name)
+            .group_by(ms.Tables.clean_table_name, ms.Tables.description)
             .distinct(ms.Tables.clean_table_name)
             .all()
         )
@@ -41,7 +41,7 @@ def get_tables(request):
             )
             .filter_by(dataset_id=dataset.id)
             .order_by(ms.Tables.table_name)
-            .group_by(ms.Tables.clean_table_name)
+            .group_by(ms.Tables.clean_table_name, ms.Tables.description)
             .all()
         )
 

@@ -248,13 +248,14 @@ export default {
             this.dialog2 = true;
         },
         update_table_vue(table) {
-            this.num_rows = this.$store.state.table_infos.table_infos_dict[
+            this.num_rows_table = this.$store.state.table_infos.table_infos_dict[
                 table
             ].num_rows;
 
-            this.table_size = this.$store.state.table_infos.table_infos_dict[
+            this.table_size_table = this.$store.state.table_infos.table_infos_dict[
                 table
             ].table_size;
+            console.log(this.num_rows_table);
         }
     },
     data() {
@@ -269,11 +270,11 @@ export default {
             labels: [],
             layout_rows: {
                 title: "Number of rows",
-                xaxis: { autorange: "reversed" }
+                // xaxis: { autorange: "reversed" }
             },
             layout_size: {
                 title: "Size of tables",
-                xaxis: { autorange: "reversed" }
+                // xaxis: { autorange: "reversed" }
             }
         };
     }

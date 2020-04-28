@@ -1,0 +1,227 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "description": "API use to launch job on redis worker",
+        "version": "1.0.0",
+        "title": "BQ Parser",
+        "contact": {
+            "email": "benjamin.berriot@gmail.com"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "components": {
+        "schemas": {
+            "Jobs": {
+                "type": "object",
+                "properties": {
+                    "job_id": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "job_type": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "job_status": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "job_start": {
+                        "type": "string",
+                        "format": "%Y-%m-%d %H:%M:%s.f"
+                    }
+                },
+                "required": [
+                    "project_name",
+                    "dataset_name"
+                ]
+            }
+        }
+    },
+    "paths": {
+        "/health": {
+            "get": {
+                "summary": "Get health status of the API",
+                "tags": [
+                    "health"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string",
+                                    "enum": ["OK"]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/jobs": {
+            "get": {
+                "summary": "Get all jobs informations",
+                "tags": [
+                    "jobs"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "jobs": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Jobs"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed. Bad post data."
+                    }
+                }
+            }
+        },
+        "/jobs/{job_id}": {
+            "get": {
+                "summary": "Get all jobs informations",
+                "tags": [
+                    "jobs"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "job_id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string",
+                                    "description": "Job status",
+                                    "enum": [
+                                        "queued",
+                                        "started",
+                                        "failed",
+                                        "finished"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete one jobs informations",
+                "tags": [
+                    "jobs"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "job_id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string",
+                                    "description": "Job status",
+                                    "example": "Job aaa-bbbb-ccc delete"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Can't delete a running job on a worker",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string",
+                                    "description": "Job status",
+                                    "example": "Can't delete running job aaa-bbbb-ccc delete"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tables": {
+            "post": {
+                "summary": "Start parsing all tables informations",
+                "tags": [
+                    "tables"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "all_ids": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/datasets": {
+            "post": {
+                "summary": "Start parsing all datasets informations",
+                "tags": [
+                    "datasets"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string",
+                                    "description": "Job id",
+                                    "example": "aaaa-bbb-ccc"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

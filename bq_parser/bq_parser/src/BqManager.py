@@ -4,6 +4,7 @@ import datetime
 
 
 def get_datasets():
+
     client = bigquery.Client()
     datasets = list(client.list_datasets())
     for datasetref in datasets:
@@ -21,6 +22,7 @@ def get_datasets():
                 "default_encryption_configuration": dataset.default_encryption_configuration,
             },
         )
+        print(dataset)
     return datasets
 
 

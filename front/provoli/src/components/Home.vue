@@ -109,47 +109,48 @@
                                     <v-select
                                         :items="table_infos"
                                         item-text="table_name"
-                                        label="Table name:"
-                                        solo
+                                        label="Table name"
                                         v-on:change="update_table_vue"
-                                        v-model="table_infos[0]"
                                     ></v-select>
-                                    <p class="text-justify">
-                                        Morbi mattis ullamcorper velit. Donec orci lectus, aliquam ut, faucibus non, euismod id, nulla. Fusce convallis metus id felis luctus adipiscing. Aenean massa. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus.
-                                        Nulla consequat massa quis enim. Praesent venenatis metus at tortor pulvinar varius. Donec venenatis vulputate lorem. Phasellus accumsan cursus velit. Pellentesque ut neque.
-                                    </p>
-                                    <p class="text-justify">
-                                        Morbi mattis ullamcorper velit. Donec orci lectus, aliquam ut, faucibus non, euismod id, nulla. Fusce convallis metus id felis luctus adipiscing. Aenean massa. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus.
-                                        Nulla consequat massa quis enim. Praesent venenatis metus at tortor pulvinar varius. Donec venenatis vulputate lorem. Phasellus accumsan cursus velit. Pellentesque ut neque.
-                                    </p>
-                                    <p class="text-justify">
-                                        Morbi mattis ullamcorper velit. Donec orci lectus, aliquam ut, faucibus non, euismod id, nulla. Fusce convallis metus id felis luctus adipiscing. Aenean massa. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus.
-                                        Nulla consequat massa quis enim. Praesent venenatis metus at tortor pulvinar varius. Donec venenatis vulputate lorem. Phasellus accumsan cursus velit. Pellentesque ut neque.
-                                    </p>
-                                    <p class="text-justify">
-                                        Morbi mattis ullamcorper velit. Donec orci lectus, aliquam ut, faucibus non, euismod id, nulla. Fusce convallis metus id felis luctus adipiscing. Aenean massa. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus.
-                                        Nulla consequat massa quis enim. Praesent venenatis metus at tortor pulvinar varius. Donec venenatis vulputate lorem. Phasellus accumsan cursus velit. Pellentesque ut neque.
-                                    </p>
-                                    <p class="text-justify">
-                                        Morbi mattis ullamcorper velit. Donec orci lectus, aliquam ut, faucibus non, euismod id, nulla. Fusce convallis metus id felis luctus adipiscing. Aenean massa. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus.
-                                        Nulla consequat massa quis enim. Praesent venenatis metus at tortor pulvinar varius. Donec venenatis vulputate lorem. Phasellus accumsan cursus velit. Pellentesque ut neque.
-                                    </p>
-                                    <p class="text-justify">
-                                        Morbi mattis ullamcorper velit. Donec orci lectus, aliquam ut, faucibus non, euismod id, nulla. Fusce convallis metus id felis luctus adipiscing. Aenean massa. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus.
-                                        Nulla consequat massa quis enim. Praesent venenatis metus at tortor pulvinar varius. Donec venenatis vulputate lorem. Phasellus accumsan cursus velit. Pellentesque ut neque.
-                                    </p>
-                                    <p class="text-justify">
-                                        Morbi mattis ullamcorper velit. Donec orci lectus, aliquam ut, faucibus non, euismod id, nulla. Fusce convallis metus id felis luctus adipiscing. Aenean massa. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus.
-                                        Nulla consequat massa quis enim. Praesent venenatis metus at tortor pulvinar varius. Donec venenatis vulputate lorem. Phasellus accumsan cursus velit. Pellentesque ut neque.
-                                    </p>
-                                    <p class="text-justify">
-                                        Morbi mattis ullamcorper velit. Donec orci lectus, aliquam ut, faucibus non, euismod id, nulla. Fusce convallis metus id felis luctus adipiscing. Aenean massa. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus.
-                                        Nulla consequat massa quis enim. Praesent venenatis metus at tortor pulvinar varius. Donec venenatis vulputate lorem. Phasellus accumsan cursus velit. Pellentesque ut neque.
-                                    </p>
-                                    <p class="text-justify">
-                                        Morbi mattis ullamcorper velit. Donec orci lectus, aliquam ut, faucibus non, euismod id, nulla. Fusce convallis metus id felis luctus adipiscing. Aenean massa. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus.
-                                        Nulla consequat massa quis enim. Praesent venenatis metus at tortor pulvinar varius. Donec venenatis vulputate lorem. Phasellus accumsan cursus velit. Pellentesque ut neque.
-                                    </p>
+
+                                    <!-- <v-row> -->
+                                    <v-col class="text-center" md="6">
+                                        <v-text-field
+                                            v-model="search"
+                                            append-icon="mdi-magnify"
+                                            label="Search"
+                                            single-line
+                                            hide-details
+                                        ></v-text-field>
+                                    </v-col>
+                                    <!-- </v-row> -->
+
+                                    <v-data-table
+                                        :headers="headers"
+                                        :items="schema"
+                                        :loading="isLoading"
+                                        :search="search"
+                                        loading-text="Loading... Please wait"
+                                        item-key="field_name"
+                                        class="elevation-1"
+                                        hide-default-footer
+                                        :items-per-page="lengthSchema"
+                                    >
+                                        <!-- <template v-slot:item.job_status="{ item }">
+                                            <v-chip
+                                                :color="get_color(item.job_status)"
+                                                dark
+                                            >{{ item.job_status }}</v-chip>
+                                        </template>-->
+                                        <template slot="items" slot-scope="props">
+                                            <td>{{ props.item.field_name }}</td>
+                                            <td class="text-xs-right">{{ props.item.field_type }}</td>
+                                            <td class="text-xs-right">{{ props.item.field_mode }}</td>
+                                            <td
+                                                class="text-xs-right"
+                                            >{{ props.item.field_description }}</td>
+                                        </template>
+                                    </v-data-table>
                                 </v-card-text>
                             </v-card>
                         </v-col>
@@ -208,6 +209,7 @@ export default {
             this.labels = [];
             this.table_info_show = false;
             this.$store.state.table_infos.table_infos = [];
+            this.schema = [];
             this.dialog = false;
         },
         open_dialog(project_name, dataset_name) {
@@ -221,6 +223,7 @@ export default {
                     this.dialog = true;
                     this.dialog2 = false;
                     this.dataset_name = dataset_name;
+                    this.project_name = project_name;
                 }
             });
             this.dialog2 = true;
@@ -229,6 +232,7 @@ export default {
             this.num_rows = [];
             this.table_size = [];
             this.labels = [];
+            this.schema = [];
             this.$store.dispatch("table_infos/getTableInfos", [
                 project_name,
                 dataset_name,
@@ -248,14 +252,20 @@ export default {
             this.dialog2 = true;
         },
         update_table_vue(table) {
-            this.num_rows_table = this.$store.state.table_infos.table_infos_dict[
+            this.isLoading = true;
+            this.$store.dispatch("schema/getSchema", [
+                this.project_name,
+                this.dataset_name,
                 table
-            ].num_rows;
+            ]);
 
-            this.table_size_table = this.$store.state.table_infos.table_infos_dict[
-                table
-            ].table_size;
-            console.log(this.num_rows_table);
+            this.unsubscribe = this.$store.subscribe(mutation => {
+                if (mutation.type === "schema/setSchema") {
+                    this.schema = this.$store.state.schema.schema;
+                    this.isLoading = false;
+                    this.lengthSchema = this.schema.length;
+                }
+            });
         }
     },
     data() {
@@ -263,17 +273,44 @@ export default {
             dialog: false,
             dialog2: false,
             table_info_show: false,
+            project_name: "",
             dataset_name: "",
             table_name: "",
             num_rows: [],
             table_size: [],
             labels: [],
+            isLoading: false,
+            search: "",
+            schema: [
+                {
+                    field_name: "",
+                    field_type: "",
+                    field_mode: "",
+                    field_description: ""
+                }
+            ],
+            headers: [
+                {
+                    text: "Field name",
+                    align: "start",
+                    sortable: true,
+                    value: "field_name"
+                },
+                { text: "Field type", value: "field_type", sortable: false },
+                { text: "Field mode", value: "field_mode", sortable: false },
+                {
+                    text: "Field description",
+                    value: "field_description",
+                    sortable: false
+                }
+            ],
+            lengthSchema: 0,
             layout_rows: {
-                title: "Number of rows",
+                title: "Number of rows"
                 // xaxis: { autorange: "reversed" }
             },
             layout_size: {
-                title: "Size of tables",
+                title: "Size of tables"
                 // xaxis: { autorange: "reversed" }
             }
         };

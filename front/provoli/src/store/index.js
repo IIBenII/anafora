@@ -4,6 +4,7 @@ import Vuex from "vuex";
 
 import datasets from './modules/datasets'
 import tables from './modules/tables'
+import schema from './modules/schema'
 import table_infos from './modules/table_infos'
 
 import build_datasets from './modules/build_datasets'
@@ -17,6 +18,7 @@ export default new Vuex.Store({
     modules: {
         datasets,
         tables,
+        schema,
         table_infos,
         build_datasets,
         build_tables,

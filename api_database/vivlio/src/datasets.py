@@ -59,3 +59,11 @@ def post_dataset(request):
 
     ms.db.session.commit()
     return "OK", 200
+
+
+def search_datasets(request):
+    filter = request.args.get("filter", type=str)
+    print(filter)
+
+    
+    return jsonify({"datasets": list_dataset})

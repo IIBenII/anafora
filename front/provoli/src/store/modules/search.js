@@ -2,8 +2,10 @@ import axios from "axios";
 
 // initial state
 const state = {
-    tables: [],
-    apiUrl: "http://172.17.0.1:5000/tables"
+    search_datasets: [],
+    search_tables: [],
+    search_fields: [],
+    apiUrl: "http://172.17.0.1:5000/search"
 }
 
 // getters
@@ -11,30 +13,29 @@ const getters = {}
 
 // actions
 const actions = {
-    async getTables({ state, commit }, [project_name, dataset_name, compact]) {
-
+    async getSearch({ state, commit }, [search]) {
         try {
             let response = await axios.get(`${state.apiUrl}`, {
                 params: {
-                    project_name: project_name,
-                    dataset_name: dataset_name,
-                    compact: compact
+                    filter: search,
                 },
                 headers: {
                     'Access-Control-Allow-Origin': '*',
                 }
             });
-            commit("setTables", response.data.tables);
+            commit("setSearch", response.data);
         } catch (error) {
-            commit("setTables", []);
+            commit("setSearch", []);
         }
-    },
+    }
 }
 
 // mutations
 const mutations = {
-    setTables(state, payload) {
-        state.tables = payload;
+    setSearch(state, payload) {
+        state.search_datasets = payload.datasets;
+        state.search_tables = payload.tables;
+        state.search_fields = payload.fields;
     }
 }
 

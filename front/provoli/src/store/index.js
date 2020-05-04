@@ -6,6 +6,7 @@ import datasets from './modules/datasets'
 import tables from './modules/tables'
 import schema from './modules/schema'
 import table_infos from './modules/table_infos'
+import search from './modules/search'
 
 import build_datasets from './modules/build_datasets'
 import build_tables from './modules/build_tables'
@@ -22,6 +23,7 @@ export default new Vuex.Store({
         table_infos,
         build_datasets,
         build_tables,
-        status
+        status,
+        search
     }
 })

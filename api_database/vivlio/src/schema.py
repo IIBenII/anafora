@@ -66,8 +66,6 @@ def get_schema(request):
         .first()
     )
 
-    print(table)
-
     query_result = (
         ms.db.session.query(
             ms.Schema.field_name,

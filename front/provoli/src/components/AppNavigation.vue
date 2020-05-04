@@ -31,7 +31,13 @@ export default {
     data() {
         return {
             items: [
-                { title: "Home", icon: "mdi-view-dashboard", link: "/" },
+                { title: "Home", icon: "mdi-home", link: "/" },
+                { title: "Search", icon: "mdi-magnify", link: "/search" },
+                {
+                    title: "Datasets",
+                    icon: "mdi-view-dashboard",
+                    link: "/datasets"
+                },
                 { title: "Build", icon: "mdi-wrench", link: "/build" }
             ],
             right: null

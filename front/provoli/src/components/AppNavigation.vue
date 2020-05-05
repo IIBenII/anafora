@@ -1,6 +1,6 @@
 <template>
     <nav>
-        <v-navigation-drawer permanent app>
+        <v-navigation-drawer permanent app  dark color="primary">
             <v-list-item>
                 <v-list-item-content>
                     <v-list-item-title class="title">Anafora</v-list-item-title>
@@ -32,7 +32,6 @@ export default {
         return {
             items: [
                 { title: "Home", icon: "mdi-home", link: "/" },
-                { title: "Search", icon: "mdi-magnify", link: "/search" },
                 {
                     title: "Datasets",
                     icon: "mdi-view-dashboard",

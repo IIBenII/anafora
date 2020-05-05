@@ -27,7 +27,7 @@
         >
             <v-col class="text-center" md="12">
                 <v-card outlined>
-                    <v-card-title>Dataset:</v-card-title>
+                    <v-card-title>Datasets:</v-card-title>
                     <v-data-table
                         :headers="headers_datasets"
                         :items="search_datasets"
@@ -35,6 +35,11 @@
                         :items-per-page="lengthTables"
                         loading-text="Loading... Please wait"
                     >
+                        <template v-slot:item.dataset_name="{ item }">
+                            <a
+                                :href="'/tables?project_name=' + item.project_name + '&dataset_name=' + item.dataset_name"
+                            >{{ item.dataset_name }}</a>
+                        </template>
                         <template slot="items" slot-scope="props">
                             <td>{{ props.item.project_name }}</td>
                             <td class="text-xs-right">{{ props.item.dataset_name }}</td>
@@ -54,8 +59,21 @@
                         :items-per-page="lengthTables"
                         loading-text="Loading... Please wait"
                     >
+                        <template v-slot:item.dataset_name="{ item }">
+                            <a
+                                :href="'/tables?project_name=' + item.project_name + '&dataset_name=' + item.dataset_name"
+                            >{{ item.dataset_name }}</a>
+                        </template>
+
+                        <template v-slot:item.table_name="{ item }">
+                            <a
+                                :href="'/tables?project_name=' + item.project_name + '&dataset_name=' + item.dataset_name + '&clean_table_name=' + item.table_name"
+                            >{{ item.table_name }}</a>
+                        </template>
+
                         <template slot="items" slot-scope="props">
                             <td>{{ props.item.project_name }}</td>
+
                             <td class="text-xs-right">{{ props.item.dataset_name }}</td>
                             <td class="text-xs-right">{{ props.item.table_name }}</td>
                             <td class="text-xs-right">{{ props.item.description }}</td>
@@ -66,7 +84,7 @@
 
             <v-col class="text-center" md="12">
                 <v-card outlined>
-                    <v-card-title>Field:</v-card-title>
+                    <v-card-title>Fields:</v-card-title>
                     <v-data-table
                         :headers="headers_fields"
                         :items="search_fields"
@@ -74,6 +92,18 @@
                         :items-per-page="lengthTables"
                         loading-text="Loading... Please wait"
                     >
+                        <template v-slot:item.dataset_name="{ item }">
+                            <a
+                                :href="'/tables?project_name=' + item.project_name + '&dataset_name=' + item.dataset_name"
+                            >{{ item.dataset_name }}</a>
+                        </template>
+
+                        <template v-slot:item.table_name="{ item }">
+                            <a
+                                :href="'/tables?project_name=' + item.project_name + '&dataset_name=' + item.dataset_name + '&clean_table_name=' + item.table_name"
+                            >{{ item.table_name }}</a>
+                        </template>
+
                         <template slot="items" slot-scope="props">
                             <td>{{ props.item.project_name }}</td>
                             <td class="text-xs-right">{{ props.item.dataset_name }}</td>

@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Datasets from "../views/Datasets.vue";
+import Tables from "../views/Tables.vue";
 import Search from "../views/Search.vue";
 import Home from "../views/Home.vue";
 
@@ -11,6 +12,11 @@ const routes = [
         path: "/datasets",
         name: "Datasets",
         component: Datasets
+    },
+    {
+        path: "/tables",
+        name: "Tables",
+        component: Tables
     },
     {
         path: "/",

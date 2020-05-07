@@ -7,7 +7,7 @@ const state = {
     num_rows: [],
     table_size: [],
     labels: [],
-    apiUrl: "http://172.17.0.1:5000/table_infos"
+    apiUrl: process.env.VUE_APP_DATABASE_ADRESS + "/table_infos"
 }
 
 // getters

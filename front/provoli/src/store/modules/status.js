@@ -3,7 +3,7 @@ import axios from "axios";
 // initial state
 const state = {
     status: [],
-    apiUrl: "http://172.17.0.1:5001/jobs"
+    apiUrl: process.env.VUE_APP_WORKER_ADRESS + "/jobs"
 }
 
 // getters

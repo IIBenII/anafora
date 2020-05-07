@@ -186,22 +186,41 @@ export default {
                     this.table_name = clean_table_name;
                     this.num_rows = this.$store.state.table_infos.num_rows;
                     this.table_size = this.$store.state.table_infos.table_size;
+                    this.layout_size.yaxis = {
+                        range: [
+                            0,
+                            Math.max.apply(Math, this.table_size) +
+                                0.2 * Math.max.apply(Math, this.table_size)
+                        ]
+                    };
+
+                    this.layout_rows.yaxis = {
+                        range: [
+                            0,
+                            Math.max.apply(Math, this.num_rows) +
+                                0.2 * Math.max.apply(Math, this.num_rows)
+                        ]
+                    };
                     this.labels = this.$store.state.table_infos.labels;
                     this.table_info_show = true;
-                    this.$router.push({
-                        name: "Tables",
-                        query: {
-                            project_name: project_name,
-                            dataset_name: dataset_name,
-                            clean_table_name: clean_table_name
-                        }
-                    });
+                    this.$router.push(
+                        {
+                            path: "/tables",
+                            query: {
+                                project_name: project_name,
+                                dataset_name: dataset_name,
+                                clean_table_name: clean_table_name
+                            }
+                        },
+                        () => {}
+                    );
                     this.dialog = false;
                 }
             });
             this.dialog = true;
         },
         update_table_vue(table) {
+            console.log(Math.max.apply(Math, this.num_rows));
             this.isLoading = true;
             this.$store.dispatch("schema/getSchema", [
                 this.project_name,
@@ -229,6 +248,7 @@ export default {
             search: "",
             num_rows: [],
             table_size: [],
+            max_table_size: 0,
             tables: [],
             labels: [],
             schema: [

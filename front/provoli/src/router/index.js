@@ -1,9 +1,5 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Datasets from "../views/Datasets.vue";
-import Tables from "../views/Tables.vue";
-import Search from "../views/Search.vue";
-import Home from "../views/Home.vue";
 
 Vue.use(VueRouter);
 
@@ -11,22 +7,26 @@ const routes = [
     {
         path: "/datasets",
         name: "Datasets",
-        component: Datasets
+        component: () =>
+            import(/* webpackChunkName: "datasets" */ "../views/Datasets.vue")
     },
     {
         path: "/tables",
         name: "Tables",
-        component: Tables
+        component: () =>
+            import(/* webpackChunkName: "tables" */ "../views/Tables.vue")
     },
     {
         path: "/",
         name: "Home",
-        component: Home
+        component: () =>
+            import(/* webpackChunkName: "home" */ "../views/Home.vue")
     },
     {
         path: "/search",
         name: "Search",
-        component: Search
+        component: () =>
+            import(/* webpackChunkName: "search" */ "../views/Search.vue")
     },
     {
         path: "/about",
@@ -45,7 +45,7 @@ const routes = [
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () =>
-            import(/* webpackChunkName: "about" */ "../views/Build.vue")
+            import(/* webpackChunkName: "build" */ "../views/Build.vue")
     }
 ];
 

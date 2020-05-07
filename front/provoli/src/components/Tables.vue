@@ -59,55 +59,94 @@
                 >
                     <v-card-title>{{table_name}}</v-card-title>
                     <v-card-text>
-                        <p class="text subtitle-2">Description:</p>
-                        <p class="text-justify">{{table_infos[0]["description"]}}</p>
-                        <Plotly
-                            :data="graph_data_rows"
-                            :layout="layout_rows"
-                            :display-mode-bar="true"
-                        ></Plotly>
+                        <v-tabs v-model="tab" centered>
+                            <v-tabs-slider></v-tabs-slider>
 
-                        <Plotly
-                            :data="graph_data_size"
-                            :layout="layout_size"
-                            :display-mode-bar="true"
-                        ></Plotly>
+                            <v-tab href="#information">Informations</v-tab>
 
-                        <v-select
-                            :items="table_infos"
-                            item-text="table_name"
-                            label="Table name"
-                            v-on:change="update_table_vue"
-                        ></v-select>
+                            <v-tab href="#schema">Schema</v-tab>
 
-                        <v-col class="text-center" md="6">
-                            <v-text-field
-                                v-model="search"
-                                append-icon="mdi-magnify"
-                                label="Search"
-                                single-line
-                                hide-details
-                            ></v-text-field>
-                        </v-col>
+                            <!-- <v-tab href="#requests">Requests</v-tab> -->
+                        </v-tabs>
 
-                        <v-data-table
-                            :headers="headers"
-                            :items="schema"
-                            :loading="isLoading"
-                            :search="search"
-                            loading-text="Loading... Please wait"
-                            item-key="field_name"
-                            class="elevation-1"
-                            hide-default-footer
-                            :items-per-page="lengthSchema"
-                        >
-                            <template slot="items" slot-scope="props">
-                                <td>{{ props.item.field_name }}</td>
-                                <td class="text-xs-right">{{ props.item.field_type }}</td>
-                                <td class="text-xs-right">{{ props.item.field_mode }}</td>
-                                <td class="text-xs-right">{{ props.item.field_description }}</td>
-                            </template>
-                        </v-data-table>
+                        <v-tabs-items v-model="tab">
+                            <v-tab-item :key="1" value="information">
+                                <v-card flat>
+                                    <v-card-text>
+                                        <p class="text subtitle-2">Description:</p>
+                                        <p class="text-justify">{{table_infos[0]["description"]}}</p>
+                                        <v-divider></v-divider>
+                                        <Plotly
+                                            :data="graph_data_rows"
+                                            :layout="layout_rows"
+                                            :display-mode-bar="false"
+                                        ></Plotly>
+                                        <v-divider></v-divider>
+                                        <Plotly
+                                            :data="graph_data_size"
+                                            :layout="layout_size"
+                                            :display-mode-bar="false"
+                                        ></Plotly>
+                                    </v-card-text>
+                                </v-card>
+                            </v-tab-item>
+
+                            <v-tab-item :key="2" value="schema">
+                                <v-card flat>
+                                    <v-card-text>
+                                        <v-select
+                                            :items="table_infos"
+                                            item-text="table_name"
+                                            label="Table name"
+                                            v-on:change="update_table_vue"
+                                        ></v-select>
+                                        <v-col class="text-center" md="6">
+                                            <v-text-field
+                                                v-model="search"
+                                                append-icon="mdi-magnify"
+                                                label="Search"
+                                                single-line
+                                                hide-details
+                                            ></v-text-field>
+                                        </v-col>
+
+                                        <v-data-table
+                                            :headers="headers"
+                                            :items="schema"
+                                            :loading="isLoading"
+                                            :search="search"
+                                            loading-text="Loading... Please wait"
+                                            item-key="field_name"
+                                            class="elevation-1"
+                                            hide-default-footer
+                                            :items-per-page="lengthSchema"
+                                        >
+                                            <template slot="items" slot-scope="props">
+                                                <td>{{ props.item.field_name }}</td>
+                                                <td
+                                                    class="text-xs-right"
+                                                >{{ props.item.field_type }}</td>
+                                                <td
+                                                    class="text-xs-right"
+                                                >{{ props.item.field_mode }}</td>
+                                                <td
+                                                    class="text-xs-right"
+                                                >{{ props.item.field_description }}</td>
+                                            </template>
+                                        </v-data-table>
+                                    </v-card-text>
+                                </v-card>
+                            </v-tab-item>
+
+                            <!-- <v-tab-item :key="3" value="requests">
+                                <v-card flat>
+                                    <div v-highlight>
+                                        <pre class="language-sql"><code>{{this.test}}
+                                        </code></pre>
+                                    </div>
+                                </v-card>
+                            </v-tab-item>-->
+                        </v-tabs-items>
                     </v-card-text>
                 </v-card>
             </v-col>
@@ -117,6 +156,8 @@
 
 <script>
 import { Plotly } from "vue-plotly";
+// import "../../public/prism-material-light.css";
+// import "prism-es6/components/prism-sql";
 
 export default {
     name: "Tables",
@@ -220,7 +261,6 @@ export default {
             this.dialog = true;
         },
         update_table_vue(table) {
-            console.log(Math.max.apply(Math, this.num_rows));
             this.isLoading = true;
             this.$store.dispatch("schema/getSchema", [
                 this.project_name,
@@ -282,7 +322,9 @@ export default {
             layout_size: {
                 title: "Size of tables"
                 // xaxis: { autorange: "reversed" }
-            }
+            },
+            tab: "information"
+            // test: "Select *\nfrom toto\nwhere a != 0"
         };
     }
 };

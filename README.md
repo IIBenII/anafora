@@ -2,6 +2,26 @@
 
 Anafora is a BigQuery data catalog that get all informations about BigQuery datasets and tables. The front is write in Vuejs and backend in Python.
 
+## Home Page
+
+![](doc/img/home.png)
+
+## Search Page
+
+![](doc/img/search.png)
+
+## Datasets Page
+
+![](doc/img/datasets.png)
+
+## Tables Page
+
+![](doc/img/tables.png)
+
+## Build Page
+
+![](doc/img/build.png)
+
 # Architecture
 
 ![](doc/img/architecture.png)

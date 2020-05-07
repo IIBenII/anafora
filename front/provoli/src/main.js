@@ -5,6 +5,9 @@ import store from "./store";
 import vuetify from "./plugins/vuetify";
 import "@babel/polyfill";
 
+import VueCodeHighlight from 'vue-code-highlight';
+Vue.use(VueCodeHighlight)
+
 Vue.config.productionTip = false;
 
 new Vue({

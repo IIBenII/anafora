@@ -3,7 +3,7 @@ import axios from "axios";
 // initial state
 const state = {
     schema: [],
-    apiUrl: "http://172.17.0.1:5000/schema"
+    apiUrl: process.env.VUE_APP_DATABASE_ADRESS + "/schema"
 }
 
 // getters

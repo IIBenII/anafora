@@ -1,3 +1,5 @@
+import os
+
 import click
 from flask import Flask
 from flask.cli import with_appcontext
@@ -38,13 +40,15 @@ def drop_db_command():
     click.echo("Initialized the database.")
 
 
-def test_job():
+def update_job_status():
+    """Update job status in database.
+    """
     with app.app_context():
         print("Subroutin update status")
 
         query_result = (
             db.session.query(Jobs.job_id,)
-            .filter(~Jobs.job_status.in_(["finished", "delete"]))
+            .filter(~Jobs.job_status.in_(["finished", "delete", "failed"]))
             .all()
         )
         for job_id in query_result:
@@ -55,7 +59,8 @@ def test_job():
 
 
 app = Flask(__name__, instance_relative_config=False)
-app.config.from_object("bq_parser.config.Config")
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("SQLALCHEMY_DATABASE_URI")
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
 db.init_app(app)
 ma.init_app(app)
@@ -72,12 +77,16 @@ app.cli.add_command(drop_db_command)
 with app.app_context():
     import bq_parser.views
 
+    scheduler = BackgroundScheduler()
+    job = scheduler.add_job(update_job_status, "interval", seconds=10)
+    scheduler.start()
+
     app
 
 if __name__ == "__main__":
 
     scheduler = BackgroundScheduler()
-    job = scheduler.add_job(test_job, "interval", seconds=10)
+    job = scheduler.add_job(update_job_status, "interval", seconds=10)
     scheduler.start()
 
     app.run(port=5001)

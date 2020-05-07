@@ -1,3 +1,5 @@
+import os
+
 import click
 from flask import Flask
 from flask.cli import with_appcontext
@@ -30,8 +32,9 @@ def drop_db_command():
 
 
 app = Flask(__name__, instance_relative_config=False)
-app.config.from_object("vivlio.config.Config")
 app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("SQLALCHEMY_DATABASE_URI")
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db.init_app(app)
 ma.init_app(app)
 CORS(app)

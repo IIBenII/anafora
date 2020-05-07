@@ -193,6 +193,39 @@
                     }
                 }
             },
+            "FieldReponse": {
+                "type": "object",
+                "properties": {
+                    "project_name": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "dataset_name": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "table_name": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "field_name": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "field_type": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "field_mode": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "field_description": {
+                        "type": "string",
+                        "format": "string"
+                    }
+                }
+            },
             "Schema": {
                 "type": "object",
                 "properties": {
@@ -465,6 +498,57 @@
                                             "type": "array",
                                             "items": {
                                                 "$ref": "#/components/schemas/Field"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed. Bad post data."
+                    }
+                }
+            }
+        },
+        "/search": {
+            "get": {
+                "summary": "Search for somethings",
+                "tags": [
+                    "search"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "filter",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "datasets": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/DatasetResponse"
+                                            }
+                                        },
+                                        "tables": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/TableResponse"
+                                            }
+                                        },
+                                        "fields": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/FieldReponse"
                                             }
                                         }
                                     }

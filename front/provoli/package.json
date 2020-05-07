@@ -11,6 +11,7 @@
     "@babel/polyfill": "^7.4.4",
     "axios": "^0.19.2",
     "core-js": "^3.6.4",
+    "dotenv": "^8.2.0",
     "vue": "^2.6.11",
     "vue-plotly": "^1.1.0",
     "vue-router": "^3.1.5",

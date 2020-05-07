@@ -25,11 +25,11 @@
 </template>
 
 <script>
-
 export default {
     name: "Datasets",
 
     created() {
+        console.log(process.env.VUE_APP_DATABASE_ADRESS);
         this.$store.dispatch("datasets/getDatasets");
     },
     computed: {
@@ -37,8 +37,7 @@ export default {
             return this.$store.state.datasets.datasets;
         }
     },
-    methods: {
-    },
+    methods: {},
     data() {
         return {
             dialog: false,

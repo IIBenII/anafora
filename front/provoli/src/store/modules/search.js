@@ -5,7 +5,7 @@ const state = {
     search_datasets: [],
     search_tables: [],
     search_fields: [],
-    apiUrl: "http://172.17.0.1:5000/search"
+    apiUrl: process.env.VUE_APP_DATABASE_ADRESS + "/search"
 }
 
 // getters
